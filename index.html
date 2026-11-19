@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">تحليلك</title>
+<style>
+* { box-sizing: border-box; font-family: system-ui; }
+body { margin: 0; background: #f6f7fb; padding-bottom: 80px; }
+.top { background: #e11d2e; color: #fff; padding: 18px; border-radius: 0 0 20px 20px; position: relative; }
+.top-head { display: flex; align-items: center; gap: 10px; padding-left: 46px; }
+.lab-logo { width: 44px; height: 44px; border-radius: 12px; object-fit: cover; background: #fff; display: none; flex-shrink: 0; }
+.top h2 { margin: 0; font-size: 18px; }
+.top p { font-size: 12px; margin: 4px 0 0; }
+.bell { position: absolute; left: 10px; top: 10px; font-size: 24px; background: #fff; border: 0; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; }
+.card { background: #fff; margin: 14px; padding: 15px; border-radius: 14px; }
+.btn { width: 100%; padding: 13px; border: 0; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 8px; font-size: 15px; display: inline-block; text-align: center; text-decoration: none; }
+.red { background: #e11d2e; color: #fff; }
+.dark { background: #111; color: #fff; }
+.green { background: #0b6b5a; color: #fff; }
+.light { background: #eee; color: #222; }
+.up { background: #fff2f2; color: #e11d2e; border: 1.5px dashed #e11d2e; }
+input, textarea, select { width: 100%; padding: 11px; margin: 6px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; background: #fff; }
+.banner { margin: 0 14px; border-radius: 14px; overflow: hidden; background: linear-gradient(90deg, #1e3a8a, #e11d2e); color: #fff; }
+.banner img { width: 100%; height: 140px; object-fit: cover; display: none; }
+.bC { padding: 14px; display: flex; justify-content: space-between; align-items: center; }
+.bC button { background: #fff; border: 0; padding: 8px 14px; border-radius: 20px; font-weight: 700; cursor: pointer; }
+.mini { flex: 1; background: #fff; border-radius: 12px; padding: 14px 6px; text-align: center; cursor: pointer; border: 1px solid #eee; }
+.result { border: 1px solid #eee; border-radius: 10px; padding: 10px; margin: 7px 0; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.act-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.edit-box { border: 1px solid #ddd; background: #fafafa; border-radius: 10px; padding: 10px; margin: 7px 0; }
+.small { font-size: 12px; color: #666; }
+.nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; display: flex; justify-content: space-around; padding: 10px; border-top: 1px solid #eee; }
+.nav button { border: 0; background: none; cursor: pointer; }
+.item { border: 1px solid #eee; border-radius: 10px; padding: 10px; margin: 7px 0; }
+.prev { width: 100%; height: 110px; object-fit: cover; border-radius: 10px; display: none; margin-top: 8px; }
+.logo-prev { width: 72px; height: 72px; object-fit: cover; border-radius: 14px; display: none; margin-top: 8px; border: 1px solid #eee; }
+.res-box { border: 1px solid #e5e7eb; background: #f9fafb; border-radius: 12px; padding: 12px; margin-top: 12px; }
+.code-pill { background: #111; color: #fff; padding: 3px 8px; border-radius: 8px; font-size: 12px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div id="p-home">
+  <div class="top">
+    <button type="button" class="bell" id="bellBtn">🔔</button>
+    <div class="top-head">
+      <img id="homeLogo" class="lab-logo" alt="لوجو المعمل">
+      <div>
+        <h2 id="homeTitle">👋 أهلا بيك في تحليلك</h2>
+        <p id="secretText">من القاهرة - سحب من البيت مجانا</p>
+        <p id="homeHours" style="font-size:11px; opacity:0.92; margin-top:3px;">🕒 يومياً من 9 صباحاً حتى 10 مساءً</p>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex; gap:8px; padding:12px;">
+    <div class="mini" id="btn-hv">🏠<br><b>زيارة منزلية</b></div>
+    <div class="mini" id="btn-book1">🧪<br><b>احجز في المعمل</b></div>
+    <div class="mini" id="btn-res1">📄<br><b>نتيجتك</b></div>
+  </div>
+  <div class="banner">
+    <img id="banImg">
+    <div class="bC">
+      <div><b id="banT">🔥 خصم 30% على الباقة الشاملة</b><p id="banS" style="font-size:11px; margin:3px 0 0;">سكر + فيتامين د + صورة دم كاملة</p></div>
+      <button type="button" id="btn-offer">اطلب العرض</button>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;">
+    📞 واتساب المعمل: <b id="waD">01097330585</b><br>
+    <button type="button" class="btn red" id="btn-book2">اطلب تحليلك دلوقتي</button>
+  </div>
+</div>
+
+<div id="p-book" style="display:none;">
+  <div class="top"><h2>🧪 احجز تحليل</h2><p>اكتب اسم التحليل وهيظهرلك على طول</p></div>
+  <div class="card">
+    <input id="sr" placeholder="فيتامين د / Vitamin D / CBC">
+    <p class="small" id="hint">اكتب أول حرفين وهيظهرلك التحليل</p>
+    <div id="resBox"></div>
+    <p><b>🧾 تحاليلك:</b></p>
+    <div id="cart">لسه ماخترتش حاجة</div>
+    <p><b>الإجمالي: <span id="tot">0</span> جنيه</b></p>
+    <button type="button" class="btn up" id="btn-rosh">📤 ارفع صورة الروشتة</button>
+    <input type="file" id="rosh" accept="image/*" style="display:none">
+    <p class="small" id="roshN" style="text-align:center;"></p>
+    <input id="nm" placeholder="اكتب اسمك">
+    <input id="ph" value="01097330585" placeholder="رقم الموبايل">
+    <textarea id="md" placeholder="ملاحظات - أدوية / أمراض مزمنة"></textarea>
+    <button type="button" class="btn red" id="btn-confirm">✅ تأكيد الطلب</button>
+    <button type="button" class="btn light" id="btn-back1">رجوع</button>
+  </div>
+</div>
+
+<div id="p-login" style="display:none;">
+  <div class="top"><h2>⚙️ دخول المعمل</h2></div>
+  <div class="card">
+    <input id="lp" type="password" placeholder="الرقم السري - 1234">
+    <button type="button" class="btn dark" id="btn-login">دخول</button>
+    <button type="button" class="btn light" id="btn-back2">رجوع</button>
+  </div>
+</div>
+
+<div id="p-admin" style="display:none;">
+  <div class="top"><h2>⚙️ لوحة تحكم المعمل</h2></div>
+  <div class="card">
+    <h3>📄 رفع وتسليم نتائج المرضى</h3>
+    <input id="rCode" placeholder="كود النتيجة (اتركه فاضي لتوليده تلقائياً)">
+    <input id="rName" placeholder="اسم المريض">
+    <input id="rPhone" placeholder="رقم موبايل المريض">
+    <select id="rStatus">
+      <option value="قيد التجهيز">⏳ قيد التجهيز</option>
+      <option value="جاهزة">✅ جاهزة</option>
+      <option value="تم التسليم">📤 تم التسليم</option>
+    </select>
+    <textarea id="rNote" placeholder="ملاحظات أو ملخص التحاليل"></textarea>
+    <button type="button" class="btn up" id="btn-rfile">📎 اختار ملف النتيجة (PDF أو صورة)</button>
+    <input type="file" id="rFile" accept="application/pdf,image/*" style="display:none">
+    <p class="small" id="rFileN" style="text-align:center;"></p>
+    <button type="button" class="btn green" id="btn-addres">⬆️ حفظ / رفع النتيجة</button>
+    <div id="adminResList" style="margin-top:10px;"></div>
+    <hr>
+    <h3>🔐 تغيير الرقم السري</h3>
+    <input id="op" type="password" placeholder="القديم">
+    <input id="np" type="password" placeholder="الجديد">
+    <button type="button" class="btn dark" id="btn-chpass">حفظ الرقم الجديد</button>
+    <hr>
+    <h3>⚙️ إعدادات عامة</h3>
+    <label>اسم المعمل</label><input id="sLabName" value="تحليلك">
+    <label>عنوان المعمل</label><input id="sLabAddr" value="من القاهرة - سحب من البيت مجانا">
+    <label>مواعيد عمل المعمل</label><input id="sLabHours" value="يومياً من 9 صباحاً حتى 10 مساءً">
+    <label>🏷️ لوجو المعمل</label>
+    <button type="button" class="btn up" id="btn-logo">🖼️ اختار لوجو المعمل</button>
+    <input type="file" id="lf" accept="image/*" style="display:none">
+    <img id="logoPrev" class="logo-prev" alt="معاينة اللوجو">
+    <button type="button" class="btn light" id="btn-dellogo">🗑️ حذف لوجو المعمل</button>
+    <label>رقم الواتساب</label><input id="sWa" value="01097330585">
+    <label>🖼️ صورة البانر</label>
+    <button type="button" class="btn up" id="btn-ban">📸 اختار صورة للبانر</button>
+    <input type="file" id="bf" accept="image/*" style="display:none">
+    <img id="banPrev" class="prev">
+    <button type="button" class="btn light" id="btn-delban">🗑️ حذف صورة البانر</button>
+    <label>عنوان البانر</label><input id="sT" value="🔥 خصم 30% على الباقة الشاملة">
+    <label>تفاصيل البانر</label><input id="sS" value="سكر + فيتامين د + صورة دم كاملة">
+    <button type="button" class="btn green" id="btn-saveset">حفظ الإعدادات</button>
+    <hr>
+    <h3>➕ إضافة تحليل</h3>
+    <input id="an" placeholder="اسم بالعربي">
+    <input id="ae" placeholder="اسم بالإنجليزي">
+    <input id="ap" type="number" placeholder="السعر">
+    <input id="ac" placeholder="الشروط">
+    <input id="at" placeholder="وقت النتيجة">
+    <button type="button" class="btn red" id="btn-addt">➕ حفظ التحليل</button>
+    <hr>
+    <h3>📋 التحاليل: <span id="cnt"></span></h3>
+    <div id="aList"></div>
+    <hr>
+    <h3>🧾 الطلبات اللي وصلت</h3>
+    <div id="ordList">لسه مفيش طلبات</div>
+    <button type="button" class="btn light" id="btn-exit">خروج من الأدمن</button>
+  </div>
+</div>
+
+<div id="p-hv" style="display:none;">
+  <div class="top"><h2>🏠 زيارة منزلية</h2><p>سحب من البيت مجاناً</p></div>
+  <div class="card">
+    <input id="hn" placeholder="الاسم">
+    <input id="hp" placeholder="رقم الموبايل">
+    <input id="ha" placeholder="العنوان">
+    <label class="small">📅 تاريخ الزيارة</label>
+    <input id="hv-date" type="date">
+    <label class="small">⏰ وقت الزيارة</label>
+    <input id="hv-time" type="time">
+    <textarea id="hno" placeholder="التحاليل المطلوبة"></textarea>
+    <button type="button" class="btn up" id="btn-hv-rosh">📤 ارفع صورة الروشتة</button>
+    <input type="file" id="hv-rosh" accept="image/*" style="display:none">
+    <p class="small" id="hv-roshN" style="text-align:center;"></p>
+    <button type="button" class="btn red" id="btn-hv-go">اطلب الزيارة</button>
+    <button type="button" class="btn light" id="btn-back3">رجوع</button>
+  </div>
+</div>
+
+<div id="p-res" style="display:none;">
+  <div class="top"><h2>📄 نتيجتك</h2><p>ادخل كود النتيجة الخاص بيك لمتابعتها وتحميلها</p></div>
+  <div class="card">
+    <input id="resCodeInput" placeholder="كود النتيجة الخاص بيك (مثال: LAB-1024)">
+    <input id="resPhoneInput" placeholder="رقم الموبايل (اختياري للتأكيد)">
+    <button type="button" class="btn green" id="btn-res-go">عرض النتيجة</button>
+    <div id="patientResView"></div>
+    <button type="button" class="btn light" id="btn-res-wa">تواصل مع المعمل عبر واتساب</button>
+    <button type="button" class="btn light" id="btn-back4">رجوع</button>
+  </div>
+</div>
+
+<div class="nav">
+  <button type="button" onclick="go('p-home')">🏠<br>الرئيسية</button>
+  <button type="button" onclick="go('p-book')">🧪<br>احجز</button>
+  <button type="button" onclick="go('p-hv')">🏠<br>زيارة</button>
+  <button type="button" onclick="go('p-res')">📄<br>النتيجة</button>
+</div>
+
+<script>
+const SUPABASE_URL = "https://nxggafpukxsyujeutyuv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_UnTAZw-imW5h-ly_VlCWjg_DLD_iMLq";
+const SUPABASE_BUCKET = "lab-results";
+
+const defaultTests = [
+  { id: 1, ar: "صورة دم كاملة", en: "CBC", price: 150, cond: "بدون صيام", time: "نفس اليوم" },
+  { id: 2, ar: "فيتامين د", en: "Vitamin D", price: 450, cond: "بدون صيام", time: "24 ساعة" },
+  { id: 3, ar: "سكر صائم", en: "Fasting Blood Sugar", price: 60, cond: "صيام 8 ساعات", time: "ساعتين" }
+];
+const defaultSettings = {
+  pass: "1234",
+  labName: "تحليلك",
+  labAddr: "من القاهرة - سحب من البيت مجانا",
+  labHours: "يومياً من 9 صباحاً حتى 10 مساءً",
+  labLogo: "",
+  wa: "01097330585",
+  banT: "🔥 خصم 30% على الباقة الشاملة",
+  banS: "سكر + فيتامين د + صورة دم كاملة",
+  banImg: ""
+};
+
+let tests = JSON.parse(localStorage.getItem('tests')) || defaultTests;
+let settings = { ...defaultSettings, ...(JSON.parse(localStorage.getItem('settings')) || {}) };
+let orders = JSON.parse(localStorage.getItem('orders')) || [];
+let labResults = JSON.parse(localStorage.getItem('labResults')) || [];
+let cart = [];
+let roshName = "";
+let hvRoshName = "";
+let editingId = null;
+let selectedResFile = null;
+let selectedResDataUrl = "";
+
+function hasCloud() {
+  return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+}
+
+async function sbFetch(path, options = {}) {
+  const headers = {
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+    ...(options.headers || {})
+  };
+  const res = await fetch(`${SUPABASE_URL}${path}`, { ...options, headers });
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`خطأ من السيرفر (${res.status}): ${txt}`);
+  }
+  if (res.status === 204) return null;
+  const ct = res.headers.get("content-type") || "";
+  return ct.includes("application/json") ? res.json() : res.text();
+}
+
+async function fetchCloudSettings() {
+  if (!hasCloud()) return settings;
+  const rows = await sbFetch("/rest/v1/app_settings?id=eq.main&select=*");
+  if (rows && rows.length) {
+    const r = rows[0];
+    settings = {
+      pass: r.pass || "1234",
+      labName: r.lab_name || "تحليلك",
+      labAddr: r.lab_addr || "من القاهرة - سحب من البيت مجانا",
+      labHours: r.lab_hours || "يومياً من 9 صباحاً حتى 10 مساءً",
+      labLogo: r.lab_logo || "",
+      wa: r.wa || "01097330585",
+      banT: r.ban_t || "",
+      banS: r.ban_s || "",
+      banImg: r.ban_img || ""
+    };
+    localStorage.setItem('settings', JSON.stringify(settings));
+    syncUI();
+  }
+  return settings;
+}
+
+async function saveCloudSettings() {
+  if (!hasCloud()) return;
+  await sbFetch("/rest/v1/app_settings?on_conflict=id", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify([{
+      id: "main",
+      pass: settings.pass,
+      lab_name: settings.labName,
+      lab_addr: settings.labAddr,
+      lab_hours: settings.labHours,
+      lab_logo: settings.labLogo,
+      wa: settings.wa,
+      ban_t: settings.banT,
+      ban_s: settings.banS,
+      ban_img: settings.banImg,
+      updated_at: new Date().toISOString()
+    }])
+  });
+}
+
+async function fetchCloudTests() {
+  if (!hasCloud()) return tests;
+  const rows = await sbFetch("/rest/v1/tests?select=*&order=created_at.desc");
+  if (rows && rows.length) {
+    tests = rows.map(t => ({
+      id: Number(t.id),
+      ar: t.ar,
+      en: t.en || "",
+      price: Number(t.price || 0),
+      cond: t.cond || "",
+      time: t.time || ""
+    }));
+    localStorage.setItem('tests', JSON.stringify(tests));
+  }
+  return tests;
+}
+
+async function upsertCloudTest(t) {
+  if (!hasCloud()) return;
+  await sbFetch("/rest/v1/tests?on_conflict=id", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify([{
+      id: Number(t.id),
+      ar: t.ar,
+      en: t.en || "",
+      price: Number(t.price || 0),
+      cond: t.cond || "",
+      time: t.time || ""
+    }])
+  });
+}
+
+async function deleteCloudTest(id) {
+  if (!hasCloud()) return;
+  await sbFetch(`/rest/v1/tests?id=eq.${encodeURIComponent(id)}`, { method: "DELETE" });
+}
+
+async function fetchCloudOrders() {
+  if (!hasCloud()) return orders;
+  const rows = await sbFetch("/rest/v1/orders?select=*&order=created_at.desc");
+  orders = (rows || []).map(o => ({
+    type: o.order_type,
+    nm: o.patient_name,
+    ph: o.phone,
+    items: o.items || "",
+    tot: o.total || "0",
+    md: o.notes || ""
+  }));
+  localStorage.setItem('orders', JSON.stringify(orders));
+  return orders;
+}
+
+async function insertCloudOrder(o) {
+  if (!hasCloud()) return;
+  await sbFetch("/rest/v1/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Prefer: "return=minimal" },
+    body: JSON.stringify([{
+      order_type: o.type,
+      patient_name: o.nm,
+      phone: o.ph,
+      items: o.items || "",
+      total: String(o.tot ?? "0"),
+      notes: o.md || ""
+    }])
+  });
+}
+
+async function fetchCloudResults() {
+  if (!hasCloud()) return labResults;
+  const rows = await sbFetch("/rest/v1/results?select=*&order=created_at.desc");
+  labResults = (rows || []).map(r => ({
+    code: r.code,
+    name: r.patient_name || "",
+    phone: r.phone || "",
+    status: r.status || "قيد التجهيز",
+    note: r.note || "",
+    fileName: r.file_name || "",
+    fileUrl: r.file_url || "",
+    updatedAt: r.updated_at || r.created_at || "",
+    openedAt: r.opened_at || "",
+    downloadedAt: r.downloaded_at || ""
+  }));
+  localStorage.setItem('labResults', JSON.stringify(labResults));
+  return labResults;
+}
+
+async function uploadToSupabaseStorage(file, code) {
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const path = `${code}/${Date.now()}_${safeName}`;
+  const up = await fetch(`${SUPABASE_URL}/storage/v1/object/${SUPABASE_BUCKET}/${path}`, {
+    method: "POST",
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      "Content-Type": file.type || "application/octet-stream",
+      "x-upsert": "true"
+    },
+    body: file
+  });
+  if (!up.ok) {
+    const errTxt = await up.text();
+    throw new Error("فشل رفع الملف: " + up.status + " - " + errTxt);
+  }
+  return `${SUPABASE_URL}/storage/v1/object/public/${SUPABASE_BUCKET}/${path}`;
+}
+
+async function upsertCloudResult(item) {
+  if (!hasCloud()) return;
+  await sbFetch("/rest/v1/results?on_conflict=code", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify([{
+      code: item.code,
+      patient_name: item.name,
+      phone: item.phone,
+      status: item.status,
+      note: item.note,
+      file_name: item.fileName,
+      file_url: item.fileUrl,
+      updated_at: item.updatedAt,
+      opened_at: item.openedAt || "",
+      downloaded_at: item.downloadedAt || ""
+    }])
+  });
+}
+
+async function deleteCloudResult(code) {
+  if (!hasCloud()) return;
+  await sbFetch(`/rest/v1/results?code=eq.${encodeURIComponent(code)}`, { method: "DELETE" });
+}
+
+async function syncAllFromCloud() {
+  if (!hasCloud()) return;
+  try {
+    await Promise.all([
+      fetchCloudSettings(),
+      fetchCloudTests(),
+      fetchCloudOrders(),
+      fetchCloudResults()
+    ]);
+  } catch (e) {}
+}
+
+const pages = ['p-home', 'p-book', 'p-login', 'p-admin', 'p-hv', 'p-res'];
+async function go(id) {
+  pages.forEach(p => document.getElementById(p).style.display = p === id ? 'block' : 'none');
+  if (id === 'p-home' || id === 'p-book') {
+    try { await Promise.all([fetchCloudSettings(), fetchCloudTests()]); } catch (e) {}
+  }
+  if (id === 'p-admin') {
+    try { await Promise.all([fetchCloudSettings(), fetchCloudTests(), fetchCloudOrders(), fetchCloudResults()]); } catch (e) {}
+    renderAdmin();
+  }
+}
+
+function syncUI() {
+  const labName = settings.labName || "تحليلك";
+  const labAddr = settings.labAddr || "من القاهرة - سحب من البيت مجانا";
+  const labHours = settings.labHours || "يومياً من 9 صباحاً حتى 10 مساءً";
+  document.getElementById('pageTitle').textContent = labName;
+  document.getElementById('homeTitle').textContent = `👋 أهلا بيك في ${labName}`;
+  document.getElementById('secretText').textContent = labAddr;
+  document.getElementById('homeHours').textContent = `🕒 ${labHours}`;
+  document.getElementById('sLabName').value = labName;
+  document.getElementById('sLabAddr').value = labAddr;
+  document.getElementById('sLabHours').value = labHours;
+
+  const homeLogo = document.getElementById('homeLogo');
+  const logoPrev = document.getElementById('logoPrev');
+  if (settings.labLogo) {
+    homeLogo.src = logoPrev.src = settings.labLogo;
+    homeLogo.style.display = logoPrev.style.display = 'block';
+  } else {
+    homeLogo.style.display = logoPrev.style.display = 'none';
+  }
+
+  document.getElementById('waD').textContent = settings.wa;
+  document.getElementById('banT').textContent = settings.banT;
+  document.getElementById('banS').textContent = settings.banS;
+  document.getElementById('sWa').value = settings.wa;
+  document.getElementById('sT').value = settings.banT;
+  document.getElementById('sS').value = settings.banS;
+  const img = document.getElementById('banImg');
+  const prev = document.getElementById('banPrev');
+  if (settings.banImg) {
+    img.src = prev.src = settings.banImg;
+    img.style.display = prev.style.display = 'block';
+  } else {
+    img.style.display = prev.style.display = 'none';
+  }
+}
+
+function formatPhoneWa(phone) {
+  let num = (phone || "").replace(/\D/g, '');
+  if (num.startsWith('0')) num = '2' + num;
+  return num;
+}
+
+function waSend(msg, targetPhone = "") {
+  const num = formatPhoneWa(targetPhone || settings.wa);
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+document.getElementById('btn-hv').onclick = () => go('p-hv');
+document.getElementById('btn-book1').onclick = () => go('p-book');
+document.getElementById('btn-book2').onclick = () => go('p-book');
+document.getElementById('btn-res1').onclick = () => go('p-res');
+document.getElementById('btn-back1').onclick = () => go('p-home');
+document.getElementById('btn-back2').onclick = () => go('p-home');
+document.getElementById('btn-back3').onclick = () => go('p-home');
+document.getElementById('btn-back4').onclick = () => go('p-home');
+document.getElementById('btn-exit').onclick = () => { editingId = null; go('p-home'); };
+
+document.getElementById('bellBtn').onclick = async () => {
+  try { await fetchCloudSettings(); } catch (e) {}
+  alert(settings.banT + "\n" + settings.banS);
+};
+
+let tClicks = 0;
+document.getElementById('secretText').onclick = () => {
+  if (++tClicks >= 5) { tClicks = 0; go('p-login'); }
+  setTimeout(() => tClicks = 0, 2000);
+};
+
+document.getElementById('btn-login').onclick = async () => {
+  try { await fetchCloudSettings(); } catch (e) {}
+  if (document.getElementById('lp').value === settings.pass) {
+    document.getElementById('lp').value = "";
+    go('p-admin');
+  } else alert("الرقم السري غلط");
+};
+
+document.getElementById('btn-offer').onclick = () => {
+  cart.push({ id: Date.now(), ar: settings.banT, price: 0 });
+  renderCart();
+  go('p-book');
+};
+
+document.getElementById('sr').oninput = function() {
+  const q = this.value.trim().toLowerCase();
+  const box = document.getElementById('resBox');
+  box.innerHTML = "";
+  if (q.length < 2) { document.getElementById('hint').style.display = 'block'; return; }
+  document.getElementById('hint').style.display = 'none';
+  tests.filter(t => t.ar.toLowerCase().includes(q) || t.en.toLowerCase().includes(q)).forEach(t => {
+    box.innerHTML += `<div class="result"><div><b>${t.ar}</b> (${t.en})<div class="small">${t.price} ج - ${t.cond} - ${t.time}</div></div><button type="button" onclick="addCart(${t.id})">إضافة</button></div>`;
+  });
+};
+
+function addCart(id) {
+  const t = tests.find(x => x.id === id);
+  if (t) { cart.push({ ...t, cid: Date.now() + Math.random() }); renderCart(); }
+}
+function delCart(cid) {
+  cart = cart.filter(x => x.cid !== cid);
+  renderCart();
+}
+function renderCart() {
+  const cDiv = document.getElementById('cart');
+  if (!cart.length) { cDiv.textContent = "لسه ماخترتش حاجة"; document.getElementById('tot').textContent = 0; return; }
+  cDiv.innerHTML = cart.map(x => `<div class="result"><span>${x.ar} (${x.price} ج)</span><button type="button" onclick="delCart(${x.cid})">حذف</button></div>`).join('');
+  document.getElementById('tot').textContent = cart.reduce((s, x) => s + Number(x.price), 0);
+}
+
+document.getElementById('btn-rosh').onclick = () => document.getElementById('rosh').click();
+document.getElementById('rosh').onchange = function() {
+  if (this.files[0]) { roshName = this.files[0].name; document.getElementById('roshN').textContent = roshName; }
+};
+
+document.getElementById('btn-hv-rosh').onclick = () => document.getElementById('hv-rosh').click();
+document.getElementById('hv-rosh').onchange = function() {
+  if (this.files[0]) { hvRoshName = this.files[0].name; document.getElementById('hv-roshN').textContent = hvRoshName; }
+};
+
+document.getElementById('btn-confirm').onclick = async () => {
+  const nm = document.getElementById('nm').value.trim();
+  const ph = document.getElementById('ph').value.trim();
+  const md = document.getElementById('md').value.trim();
+  if (!nm || !ph) return alert("اكتب الاسم والموبايل");
+  const tot = document.getElementById('tot').textContent;
+  const orderObj = { type: "حجز", nm, ph, md, tot, items: cart.map(x => x.ar).join("، ") || roshName || "بدون" };
+  orders.unshift(orderObj);
+  localStorage.setItem('orders', JSON.stringify(orders));
+  try { await insertCloudOrder(orderObj); } catch (e) { alert(e.message); }
+  waSend(`حجز تحاليل:\nالاسم: ${nm}\nالموبايل: ${ph}\nالتحاليل: ${cart.map(x => x.ar).join("، ") || "-"}\nروشتة: ${roshName || "لا"}\nالإجمالي: ${tot} ج\nملاحظات: ${md}`);
+  cart = []; roshName = ""; document.getElementById('roshN').textContent = "";
+  renderCart(); go('p-home');
+};
+
+document.getElementById('btn-hv-go').onclick = async () => {
+  const hn = document.getElementById('hn').value.trim();
+  const hp = document.getElementById('hp').value.trim();
+  const ha = document.getElementById('ha').value.trim();
+  const hDate = document.getElementById('hv-date').value;
+  const hTime = document.getElementById('hv-time').value;
+  const hno = document.getElementById('hno').value.trim();
+  if (!hn || !hp || !ha) return alert("كمل البيانات");
+  const slot = [hDate, hTime].filter(Boolean).join(" - ") || "غير محدد";
+  const orderObj = {
+    type: "زيارة منزلية",
+    nm: hn,
+    ph: hp,
+    md: `${ha} | الموعد: ${slot} | روشتة: ${hvRoshName || "لا"} | ${hno}`,
+    tot: "-",
+    items: hno || hvRoshName || "سحب منزلي"
+  };
+  orders.unshift(orderObj);
+  localStorage.setItem('orders', JSON.stringify(orders));
+  try { await insertCloudOrder(orderObj); } catch (e) { alert(e.message); }
+  waSend(`طلب زيارة منزلية:\nالاسم: ${hn}\nالموبايل: ${hp}\nالعنوان: ${ha}\nالموعد: ${slot}\nالتحاليل: ${hno || "-"}\nروشتة: ${hvRoshName || "لا"}`);
+  ['hn', 'hp', 'ha', 'hv-date', 'hv-time', 'hno'].forEach(id => document.getElementById(id).value = "");
+  hvRoshName = "";
+  document.getElementById('hv-roshN').textContent = "";
+  go('p-home');
+};
+
+document.getElementById('btn-rfile').onclick = () => document.getElementById('rFile').click();
+document.getElementById('rFile').onchange = function() {
+  const f = this.files[0];
+  if (!f) return;
+  selectedResFile = f;
+  document.getElementById('rFileN').textContent = f.name;
+  const r = new FileReader();
+  r.onload = e => { selectedResDataUrl = e.target.result; };
+  r.readAsDataURL(f);
+};
+
+document.getElementById('btn-addres').onclick = async () => {
+  let code = document.getElementById('rCode').value.trim().toUpperCase();
+  const name = document.getElementById('rName').value.trim();
+  const phone = document.getElementById('rPhone').value.trim();
+  const status = document.getElementById('rStatus').value;
+  const note = document.getElementById('rNote').value.trim();
+  if (!code) code = "LAB-" + Math.floor(1000 + Math.random() * 9000);
+
+  const existing = labResults.find(x => x.code.toUpperCase() === code);
+  let fileUrl = existing ? existing.fileUrl : "";
+  let fileName = existing ? existing.fileName : "";
+
+  try {
+    if (selectedResFile) {
+      fileName = selectedResFile.name;
+      fileUrl = hasCloud() ? await uploadToSupabaseStorage(selectedResFile, code) : selectedResDataUrl;
+    }
+    const item = {
+      code, name, phone, status, note, fileName, fileUrl,
+      updatedAt: new Date().toLocaleString('ar-EG'),
+      openedAt: existing ? (existing.openedAt || "") : "",
+      downloadedAt: existing ? (existing.downloadedAt || "") : ""
+    };
+    labResults = [item, ...labResults.filter(x => x.code.toUpperCase() !== code)];
+    localStorage.setItem('labResults', JSON.stringify(labResults));
+    await upsertCloudResult(item);
+
+    ['rCode', 'rName', 'rPhone', 'rNote'].forEach(id => document.getElementById(id).value = "");
+    document.getElementById('rFile').value = "";
+    document.getElementById('rFileN').textContent = "";
+    selectedResFile = null;
+    selectedResDataUrl = "";
+    renderAdminRes();
+    alert(`تم حفظ النتيجة - كود المريض: ${code}`);
+  } catch (err) {
+    alert(err.message || "حدث خطأ أثناء رفع النتيجة");
+  }
+};
+
+async function deliverResultWa(code) {
+  const item = labResults.find(x => x.code === code);
+  if (!item) return;
+  const updated = {
+    ...item,
+    status: "تم التسليم",
+    updatedAt: new Date().toLocaleString('ar-EG')
+  };
+  labResults = labResults.map(x => x.code === code ? updated : x);
+  localStorage.setItem('labResults', JSON.stringify(labResults));
+  try { await upsertCloudResult(updated); } catch (e) {}
+  renderAdminRes();
+
+  const linkLine = updated.fileUrl ? `\nرابط تحميل النتيجة:\n${updated.fileUrl}` : "";
+  const msg = `نتيجتك جاهزة من ${settings.labName || "المعمل"}:\nالاسم: ${updated.name || "-"}\nكود النتيجة: ${updated.code}\nالحالة: ${updated.status}${linkLine}\nيمكنك متابعة النتيجة عبر صفحة «نتيجتك» بالكود.`;
+  if (!updated.phone) {
+    alert("لا يوجد رقم موبايل مسجل لهذا الكود، سيتم فتح الواتساب لنسخ الرسالة.");
+    waSend(msg);
+    return;
+  }
+  waSend(msg, updated.phone);
+}
+
+async function markResultDownloaded(code) {
+  const item = labResults.find(x => x.code === code);
+  if (!item || item.downloadedAt) return;
+  const now = new Date().toLocaleString('ar-EG');
+  const updated = {
+    ...item,
+    openedAt: item.openedAt || now,
+    downloadedAt: now
+  };
+  labResults = labResults.map(x => x.code === code ? updated : x);
+  localStorage.setItem('labResults', JSON.stringify(labResults));
+  try { await upsertCloudResult(updated); } catch (e) {}
+}
+
+async function delResult(code) {
+  labResults = labResults.filter(x => x.code !== code);
+  localStorage.setItem('labResults', JSON.stringify(labResults));
+  try { await deleteCloudResult(code); } catch (e) {}
+  renderAdminRes();
+}
+
+function renderAdminRes() {
+  const box = document.getElementById('adminResList');
+  if (!labResults.length) { box.innerHTML = `<div class="small">لا توجد نتائج مرفوعة</div>`; return; }
+  box.innerHTML = labResults.map(r => {
+    const openInfo = r.openedAt ? `تم فتحها: ${r.openedAt}` : "لم تُفتح بعد";
+    const dlInfo = r.downloadedAt ? `تم تحميلها: ${r.downloadedAt}` : "لم تُحمّل بعد";
+    return `
+      <div class="item">
+        <span class="code-pill">${r.code}</span> <b>${r.name || "-"}</b> (${r.phone || "-"})<br>
+        <span class="small">الحالة: ${r.status} | الملف: ${r.fileName || "بدون"} | ${r.updatedAt || ""}</span><br>
+        <span class="small">👁️ الفتح: ${openInfo} | 📥 التحميل: ${dlInfo}</span>
+        <div class="act-btns" style="margin-top:6px;">
+          <button type="button" onclick="deliverResultWa('${r.code}')">تسليم وإرسال واتساب</button>
+          <button type="button" onclick="delResult('${r.code}')">حذف</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+document.getElementById('btn-res-go').onclick = async () => {
+  const code = document.getElementById('resCodeInput').value.trim().toUpperCase();
+  const phone = document.getElementById('resPhoneInput').value.trim();
+  const view = document.getElementById('patientResView');
+  if (!code) return alert("اكتب كود النتيجة الخاص بيك");
+
+  try { await fetchCloudResults(); } catch (e) {}
+
+  let found = labResults.find(r => {
+    const codeMatch = r.code.toUpperCase() === code;
+    const phoneMatch = !phone || (r.phone && r.phone.trim() === phone);
+    return codeMatch && phoneMatch;
+  });
+
+  if (!found) {
+    view.innerHTML = `<div class="res-box"><div class="small">لا توجد نتيجة مطابقة لهذا الكود. تأكد من الكود أو تواصل مع المعمل.</div></div>`;
+    return;
+  }
+
+  if (!found.openedAt) {
+    const now = new Date().toLocaleString('ar-EG');
+    found = { ...found, openedAt: now };
+    labResults = labResults.map(r => r.code === found.code ? found : r);
+    localStorage.setItem('labResults', JSON.stringify(labResults));
+    try { await upsertCloudResult(found); } catch (e) {}
+  }
+
+  const dlAttr = found.fileName ? `download="${found.fileName}"` : `download="${found.code}.pdf"`;
+  const fileBtn = found.fileUrl
+    ? `<a class="btn green" href="${found.fileUrl}" target="_blank" ${dlAttr} onclick="markResultDownloaded('${found.code}')">📥 عرض / تحميل النتيجة (PDF)</a>`
+    : `<div class="small" style="margin-top:8px;">لم يتم إرفاق ملف PDF بعد.</div>`;
+
+  view.innerHTML = `
+    <div class="res-box">
+      <div><span class="code-pill">${found.code}</span> <b>${found.name || "مريض"}</b></div>
+      <div style="margin-top:6px;"><b>الحالة:</b> ${found.status}</div>
+      ${found.updatedAt ? `<div class="small">آخر تحديث: ${found.updatedAt}</div>` : ""}
+      ${found.note ? `<div class="small" style="margin-top:6px;">ملاحظات: ${found.note}</div>` : ""}
+      ${fileBtn}
+    </div>
+  `;
+};
+
+document.getElementById('btn-res-wa').onclick = () => {
+  const code = document.getElementById('resCodeInput').value.trim();
+  const phone = document.getElementById('resPhoneInput').value.trim();
+  waSend(`استعلام عن نتيجة:\nالكود: ${code || "-"}\nالموبايل: ${phone || "-"}`);
+};
+
+function renderAdmin() {
+  renderAdminRes();
+  document.getElementById('cnt').textContent = tests.length;
+  document.getElementById('aList').innerHTML = tests.map(t => {
+    if (editingId === t.id) {
+      return `
+        <div class="edit-box">
+          <input id="ea-${t.id}" value="${t.ar}" placeholder="اسم بالعربي">
+          <input id="ee-${t.id}" value="${t.en}" placeholder="اسم بالإنجليزي">
+          <input id="ep-${t.id}" type="number" value="${t.price}" placeholder="السعر">
+          <input id="ec-${t.id}" value="${t.cond}" placeholder="الشروط">
+          <input id="et-${t.id}" value="${t.time}" placeholder="وقت النتيجة">
+          <div class="act-btns">
+            <button type="button" class="btn green" onclick="saveEdit(${t.id})">حفظ التعديل</button>
+            <button type="button" class="btn light" onclick="cancelEdit()">إلغاء</button>
+          </div>
+        </div>
+      `;
+    }
+    return `<div class="result"><div><b>${t.ar}</b> (${t.price} ج)<div class="small">${t.en || "-"} | ${t.cond || "-"} | ${t.time || "-"}</div></div><div class="act-btns"><button type="button" onclick="startEdit(${t.id})">تعديل</button><button type="button" onclick="delTest(${t.id})">حذف</button></div></div>`;
+  }).join('');
+  document.getElementById('ordList').innerHTML = orders.length ? orders.map(o => `<div class="item"><b>${o.type}</b> - ${o.nm} (${o.ph})<br><span class="small">${o.items} | ${o.tot} ج | ${o.md}</span></div>`).join('') : "لسه مفيش طلبات";
+}
+
+function startEdit(id) { editingId = id; renderAdmin(); }
+function cancelEdit() { editingId = null; renderAdmin(); }
+async function saveEdit(id) {
+  const ar = document.getElementById(`ea-${id}`).value.trim();
+  const en = document.getElementById(`ee-${id}`).value.trim();
+  const price = document.getElementById(`ep-${id}`).value.trim();
+  const cond = document.getElementById(`ec-${id}`).value.trim();
+  const time = document.getElementById(`et-${id}`).value.trim();
+  if (!ar || !price) return alert("اكتب الاسم والسعر");
+  const updated = { id, ar, en, price: Number(price), cond, time };
+  tests = tests.map(t => t.id === id ? updated : t);
+  localStorage.setItem('tests', JSON.stringify(tests));
+  editingId = null;
+  renderAdmin();
+  try { await upsertCloudTest(updated); } catch (e) { alert(e.message); }
+}
+
+document.getElementById('btn-addt').onclick = async () => {
+  const ar = document.getElementById('an').value.trim();
+  const en = document.getElementById('ae').value.trim();
+  const price = document.getElementById('ap').value.trim();
+  const cond = document.getElementById('ac').value.trim();
+  const time = document.getElementById('at').value.trim();
+  if (!ar || !price) return alert("اكتب الاسم والسعر");
+  const newTest = { id: Date.now(), ar, en, price: Number(price), cond, time };
+  tests.unshift(newTest);
+  localStorage.setItem('tests', JSON.stringify(tests));
+  ['an','ae','ap','ac','at'].forEach(id => document.getElementById(id).value = "");
+  renderAdmin();
+  try { await upsertCloudTest(newTest); } catch (e) { alert(e.message); }
+};
+
+async function delTest(id) {
+  if (editingId === id) editingId = null;
+  tests = tests.filter(t => t.id !== id);
+  localStorage.setItem('tests', JSON.stringify(tests));
+  renderAdmin();
+  try { await deleteCloudTest(id); } catch (e) {}
+}
+
+document.getElementById('btn-logo').onclick = () => document.getElementById('lf').click();
+document.getElementById('lf').onchange = function() {
+  if (this.files[0]) {
+    const r = new FileReader();
+    r.onload = e => { settings.labLogo = e.target.result; syncUI(); };
+    r.readAsDataURL(this.files[0]);
+  }
+};
+document.getElementById('btn-dellogo').onclick = () => { settings.labLogo = ""; syncUI(); };
+
+document.getElementById('btn-ban').onclick = () => document.getElementById('bf').click();
+document.getElementById('bf').onchange = function() {
+  if (this.files[0]) {
+    const r = new FileReader();
+    r.onload = e => { settings.banImg = e.target.result; syncUI(); };
+    r.readAsDataURL(this.files[0]);
+  }
+};
+document.getElementById('btn-delban').onclick = () => { settings.banImg = ""; syncUI(); };
+
+document.getElementById('btn-saveset').onclick = async () => {
+  settings.labName = document.getElementById('sLabName').value.trim() || "تحليلك";
+  settings.labAddr = document.getElementById('sLabAddr').value.trim() || "من القاهرة - سحب من البيت مجانا";
+  settings.labHours = document.getElementById('sLabHours').value.trim() || "يومياً من 9 صباحاً حتى 10 مساءً";
+  settings.wa = document.getElementById('sWa').value.trim();
+  settings.banT = document.getElementById('sT').value.trim();
+  settings.banS = document.getElementById('sS').value.trim();
+  localStorage.setItem('settings', JSON.stringify(settings));
+  syncUI();
+  try {
+    await saveCloudSettings();
+    alert("تم الحفظ أونلاين");
+  } catch (e) {
+    alert(e.message);
+  }
+};
+
+document.getElementById('btn-chpass').onclick = async () => {
+  if (document.getElementById('op').value !== settings.pass) return alert("القديم غلط");
+  const np = document.getElementById('np').value.trim();
+  if (!np) return alert("اكتب الجديد");
+  settings.pass = np;
+  localStorage.setItem('settings', JSON.stringify(settings));
+  document.getElementById('op').value = document.getElementById('np').value = "";
+  try {
+    await saveCloudSettings();
+    alert("تم التغيير أونلاين");
+  } catch (e) {
+    alert(e.message);
+  }
+};
+
+syncUI();
+syncAllFromCloud();
+</script>
+</body>
+</html>
